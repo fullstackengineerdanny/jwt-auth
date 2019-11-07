@@ -1,26 +1,85 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import
+{
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+}
+from 'react-router-dom'
 
-function App() {
+function App()
+{
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Router>
+          <Link to="/">Home</Link>
+          <Switch>
+            <Route path="/">
+              <Register />
+            </Route>
+          </Switch>
+        </Router>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+class Register extends React.Component
+{
+  constructor(props)
+  {
+    super(props)
+    this.state = { user: "", password: "" }
+    this.logIn = this.logIn.bind(this)
+  }
+
+  logIn = () =>
+  {
+    let xhr = new XMLHttpRequest()
+
+    xhr.addEventListener('load', () => { console.log(xhr.responseText) })
+    xhr.open('GET', 'https://localhost:3000/users')
+    xhr.send()
+  }
+
+  render()
+  {
+    return (<div>
+      <User />
+      <Password />
+      <Submit />
+    </div>)
+  }
+}
+
+function User()
+{
+  return (
+    <div>
+      <label>Username</label>
+      <input type="text"></input>
+    </div>
+  )
+}
+
+function Password()
+{
+  return (
+    <div>
+      <label>Password</label>
+      <input type="text"></input>
+    </div>
+  )
+}
+
+function Submit()
+{
+  return (
+    <button type="submit">Submit</button>
+  )
+}
+
+export default App
